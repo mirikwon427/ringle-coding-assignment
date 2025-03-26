@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import ringle.tutoring.domain.common.entity.Active;
+import ringle.tutoring.domain.common.enums.Active;
 import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 
 @Entity
