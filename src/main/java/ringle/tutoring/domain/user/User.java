@@ -37,6 +37,6 @@ public class User extends BaseTimeEntity {
   private Active userStatus = Active.active;
 
   @Column(name = "user_time_zone", nullable = false)
-  private String userTimeZone;
+  private String userTimeZone = "UTC";
 
 }
