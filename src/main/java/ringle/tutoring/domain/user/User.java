@@ -9,10 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import ringle.tutoring.domain.common.entity.Active;
+import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
