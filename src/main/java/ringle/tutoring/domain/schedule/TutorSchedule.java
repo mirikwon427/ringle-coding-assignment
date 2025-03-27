@@ -2,6 +2,7 @@ package ringle.tutoring.domain.schedule;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,14 +19,14 @@ public class TutorSchedule {
   @Column(name = "tutor_schedule_id")
   private long tutorScheduleId;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tutor_id")
-  private Tutor tutorId;
+  private Tutor tutor;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "class_time_id")
-  private ClassTime classTimeId;
+  private ClassTime classTime;
 
-  @Column(name = "tutor_id", nullable = false)
+  @Column(name = "tutor_schedule_is_available", nullable = false)
   private Boolean tutorScheduleIsAvailable = true;
 }
