@@ -141,6 +141,7 @@ public class TutorScheduleService {
         .map(ts -> {
           Tutor tutor = ts.getTutor();
           return new GetTutorScheduleResponseDto.TutorInfo(
+              ts.getTutorScheduleId(),
               tutor.getTutorId(),
               tutor.getTutorName(),
               tutor.getTutorUniversity(),
