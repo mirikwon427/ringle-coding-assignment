@@ -33,12 +33,14 @@ public class UserScheduleService {
     User user = findUser(userId);
     UserLesson userLesson = findByUser(user);
 
+    // 수업권 시간 검증 (다르면 예외)
     validateUserLesson(userLesson, userScheduleRequestDto.getLessonDuration());
 
     Instant[] validPeriod = checkValidPeriod(userLesson, userScheduleRequestDto);
     Instant validStartDate = validPeriod[0];
     Instant validEndDate = validPeriod[1];
 
+    // 실제 가능한 클래스 시간 조회
     List<ClassTime> classTimes = findAvailableClassTimes(validStartDate, validEndDate);
 
     return UserScheduleResponseDto.from(user, userLesson, classTimes);

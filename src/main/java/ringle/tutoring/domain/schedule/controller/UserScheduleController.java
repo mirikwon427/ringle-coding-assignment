@@ -21,6 +21,7 @@ public class UserScheduleController {
     this.userScheduleService = userScheduleService;
   }
 
+  // 학생 수업 예약 가능한 시간 조회
   @GetMapping("/schedule/{userId}")
   public ResponseEntity<?> getStudentSchedule(@PathVariable long userId, @RequestBody UserScheduleRequestDto userScheduleRequestDto) {
     try {

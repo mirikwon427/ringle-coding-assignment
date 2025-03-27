@@ -23,6 +23,8 @@ public class BookingController {
   public BookingController(BookingService bookingService) {
     this.bookingService = bookingService;
   }
+
+  // 수업 예약 (예약 성공 시 예약 정보 반환)
   @PostMapping("/lesson/{userId}")
   public ResponseEntity<?> bookLesson(@PathVariable long userId, @RequestBody BookLessonRequestDto bookLessonRequestDto) {
     try {
@@ -34,6 +36,7 @@ public class BookingController {
     }
   }
 
+  // 학생이 예약한 모든 수업 조회
   @GetMapping("/lesson/{userId}")
   public ResponseEntity<?> getBookLesson(@PathVariable long userId) {
     try {

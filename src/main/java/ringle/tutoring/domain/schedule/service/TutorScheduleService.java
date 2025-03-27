@@ -95,6 +95,7 @@ public class TutorScheduleService {
     } else if (requestDto.getLessonDuration() == 40) {
       tutorSchedules = getTutorSchedulesFor40Minutes(currentClassTime, requestDto.getClassTimeId());
     } else {
+      // 지원하지 않는 수업 길이
       return new GetTutorScheduleResponseDto(
           currentClassTime.getClassTimeId(),
           currentClassTime.getClassStartTime(),

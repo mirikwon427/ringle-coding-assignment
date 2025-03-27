@@ -24,6 +24,7 @@ public class TutorScheduleController {
     this.tutorScheduleService = tutorScheduleService;
   }
 
+  // 튜터 수업 스케줄 등록
   @PostMapping("/schedule/{tutorId}")
   public ResponseEntity<?> createTutorSchedule(@PathVariable long tutorId, @RequestBody TutorScheduleRequestDto tutorScheduleRequestDto) {
     try {
@@ -35,6 +36,7 @@ public class TutorScheduleController {
     }
   }
 
+  // 튜터 수업 스케줄 삭제
   @DeleteMapping("/schedule/{tutorId}")
   public ResponseEntity<?> deleteTutorSchedule(@PathVariable long tutorId, @RequestBody TutorScheduleRequestDto tutorScheduleRequestDto) {
     try {
@@ -46,6 +48,7 @@ public class TutorScheduleController {
     }
   }
 
+  // 특정 시간과 수업 길이에 따라 가능한 튜터 목록 조회
   @GetMapping("/schedule")
   public ResponseEntity<?> getTutorSchedule(@RequestBody GetTutorScheduleRequestDto getTutorScheduleRequestDto) {
     try {

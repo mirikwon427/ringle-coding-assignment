@@ -44,6 +44,7 @@ public class BookingService {
 
   @Transactional
   public BookLessonResponseDto bookLesson(long userId, BookLessonRequestDto bookLessonRequestDto) {
+    // 수업 예약 로직: 사용자 및 튜터 일정 확인 후 예약 처리, 수업권 검증 후 예약 상태 업데이트
     User user = findUser(userId);
     TutorSchedule tutorSchedule = findTutorSchedule(bookLessonRequestDto.getTutorScheduleId());
     UserLesson userLesson = findUserLesson(user, Active.active);
@@ -85,6 +86,7 @@ public class BookingService {
   }
 
   private void validateLessonDuration(LessonPackage lessonPackage, BookLessonRequestDto bookLessonRequestDto) {
+    // 요청한 수업 시간과 사용자의 수업권이 맞지 않으면 예약 불가
     if (lessonPackage.getLessonPackageduration() != bookLessonRequestDto.getLessonDuration()) {
       throw new IllegalArgumentException("보유한 수업권으로는 " + lessonPackage.getLessonPackageduration() + "분 수업만 예약할 수 있습니다.");
     }
