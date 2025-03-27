@@ -1,4 +1,4 @@
-package ringle.tutoring.domain.schedule;
+package ringle.tutoring.domain.schedule.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
