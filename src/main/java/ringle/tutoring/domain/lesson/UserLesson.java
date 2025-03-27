@@ -10,11 +10,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.Getter;
 import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 import ringle.tutoring.domain.common.enums.Active;
-import ringle.tutoring.domain.user.User;
+import ringle.tutoring.domain.user.entity.User;
 
 @Entity
+@Getter
 @Table(name = "user_lessons")
 public class UserLesson extends BaseTimeEntity {
   @Id

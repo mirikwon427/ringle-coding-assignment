@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ringle.tutoring.domain.tutor.entity.Tutor;
 
 public interface TutorRepository extends JpaRepository<Tutor, Long> {
-  Optional<Tutor> findById(long email);
+  Optional<Tutor> findById(long tutorId);
 }
