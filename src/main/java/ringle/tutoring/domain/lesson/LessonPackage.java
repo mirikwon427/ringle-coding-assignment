@@ -7,9 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 
 @Entity
+@Getter
 @Table(name = "lessons_packages")
 public class LessonPackage extends BaseTimeEntity {
   @Id
@@ -20,8 +22,8 @@ public class LessonPackage extends BaseTimeEntity {
   @Column(name = "lesson_package_name", nullable = false, length = 100)
   private String lessonPackageName;
 
-  @Column(name = "lesson_package_description", nullable = false, length = 1000)
-  private int lessonPackageduration;
+  @Column(name = "lesson_package_duration", nullable = false)
+  private int lessonPackageduration = 0;
 
   @Column(name = "lesson_package_total_lessons", nullable = false)
   private int lessonPackageTotalLessons = 0;

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ringle.tutoring.domain.schedule.dto.response.TutorScheduleResponseDto;
 import ringle.tutoring.domain.schedule.service.TutorScheduleService;
-import ringle.tutoring.domain.schedule.dto.request.ScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.request.TutorScheduleRequestDto;
 
 @RestController
 @RequestMapping("tutor")
@@ -22,9 +22,9 @@ public class TutorScheduleController {
   }
 
   @PostMapping("/schedule/{tutorId}")
-  public ResponseEntity<?> createTutorSchedule(@PathVariable long tutorId, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+  public ResponseEntity<?> createTutorSchedule(@PathVariable long tutorId, @RequestBody TutorScheduleRequestDto tutorScheduleRequestDto) {
     try {
-      TutorScheduleResponseDto tutorScheduleResponseDto = tutorScheduleService.createTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
+      TutorScheduleResponseDto tutorScheduleResponseDto = tutorScheduleService.createTutorSchedule(tutorId, tutorScheduleRequestDto.getClassTimeIds());
       return ResponseEntity.ok(tutorScheduleResponseDto);
     } catch (Exception e) {
       e.printStackTrace();  // 예외를 콘솔에 출력
@@ -33,9 +33,9 @@ public class TutorScheduleController {
   }
 
   @DeleteMapping("/schedule/{tutorId}")
-  public ResponseEntity<?> deleteTutorSchedule(@PathVariable long tutorId, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+  public ResponseEntity<?> deleteTutorSchedule(@PathVariable long tutorId, @RequestBody TutorScheduleRequestDto tutorScheduleRequestDto) {
     try {
-      tutorScheduleService.deleteTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
+      tutorScheduleService.deleteTutorSchedule(tutorId, tutorScheduleRequestDto.getClassTimeIds());
       return ResponseEntity.noContent().build();
     } catch (Exception e) {
       e.printStackTrace();  // 예외를 콘솔에 출력

@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 import ringle.tutoring.domain.schedule.entity.TutorSchedule;
-import ringle.tutoring.domain.user.User;
+import ringle.tutoring.domain.user.entity.User;
 
 @Entity
 @Table(name = "bookings")
