@@ -39,11 +39,7 @@ public class UserScheduleService {
     Instant validStartDate = validPeriod[0];
     Instant validEndDate = validPeriod[1];
 
-    List<ClassTime> classTimes = classTimeRepository.findByClassStartTimeBetweenAndClassTimeIsAvailableTrue(validStartDate, validEndDate);
-
-    if (classTimes.isEmpty()) {
-      throw new IllegalArgumentException("시간이 없습니다.");
-    }
+    List<ClassTime> classTimes = findAvailableClassTimes(validStartDate, validEndDate);
 
     return UserScheduleResponseDto.from(user, userLesson, classTimes);
 
@@ -81,5 +77,15 @@ public class UserScheduleService {
     }
 
     return new Instant[] {validStartDate, validEndDate};
+  }
+
+  private List<ClassTime> findAvailableClassTimes(Instant validStartDate, Instant validEndDate) {
+    List<ClassTime> classTimes = classTimeRepository.findByClassStartTimeBetweenAndClassTimeIsAvailableTrue(validStartDate, validEndDate);
+
+    if (classTimes.isEmpty()) {
+      throw new IllegalArgumentException("시간이 없습니다.");
+    }
+
+    return classTimes;
   }
 }
