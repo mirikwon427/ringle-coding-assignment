@@ -1,9 +1,15 @@
 package ringle.tutoring.domain.schedule.service;
 
 import jakarta.transaction.Transactional;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import ringle.tutoring.domain.schedule.dto.request.GetTutorScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.response.GetTutorScheduleResponseDto;
 import ringle.tutoring.domain.schedule.dto.response.TutorScheduleResponseDto;
 import ringle.tutoring.domain.schedule.entity.ClassTime;
 import ringle.tutoring.domain.schedule.entity.TutorSchedule;
@@ -79,5 +85,70 @@ public class TutorScheduleService {
 
     }
   }
+
+  @Transactional
+  public GetTutorScheduleResponseDto getTutorSchedules(GetTutorScheduleRequestDto requestDto) {
+    ClassTime currentClassTime = findClassTime(requestDto.getClassTimeId());
+    List<TutorSchedule> tutorSchedules;
+
+    if (requestDto.getLessonDuration() == 20) {
+      tutorSchedules = getTutorSchedulesFor20Minutes(currentClassTime);
+    } else if (requestDto.getLessonDuration() == 40) {
+      tutorSchedules = getTutorSchedulesFor40Minutes(currentClassTime, requestDto.getClassTimeId());
+    } else {
+      return new GetTutorScheduleResponseDto(
+          currentClassTime.getClassTimeId(),
+          currentClassTime.getClassStartTime(),
+          Collections.emptyList()
+      );
+    }
+
+    List<GetTutorScheduleResponseDto.TutorInfo> tutorInfos = convertToTutorInfoList(tutorSchedules);
+    return new GetTutorScheduleResponseDto(
+        currentClassTime.getClassTimeId(),
+        currentClassTime.getClassStartTime(),
+        tutorInfos
+    );
+  }
+
+  private List<TutorSchedule> getTutorSchedulesFor20Minutes(ClassTime currentClassTime) {
+    return tutorScheduleRepository.findByClassTimeAndTutorScheduleIsAvailableTrue(currentClassTime);
+  }
+
+  private List<TutorSchedule> getTutorSchedulesFor40Minutes(ClassTime currentClassTime, int currentClassTimeId) {
+    // 다음 클래스타임 아이디 조회 (예: 현재 id + 1)
+    ClassTime nextClassTime = findClassTime(currentClassTimeId + 1);
+    if (nextClassTime == null) {
+      // 다음 클래스타임이 없으면 40분 수업은 제공할 수 없음
+      return Collections.emptyList();
+    }
+
+    // 현재 클래스타임과 다음 클래스타임 모두 가능한 튜터만 필터링
+    List<TutorSchedule> currentSchedules = tutorScheduleRepository.findByClassTimeAndTutorScheduleIsAvailableTrue(currentClassTime);
+    List<TutorSchedule> nextSchedules = tutorScheduleRepository.findByClassTimeAndTutorScheduleIsAvailableTrue(nextClassTime);
+
+    Set<Long> nextTutorIds = nextSchedules.stream()
+        .map(ts -> ts.getTutor().getTutorId())
+        .collect(Collectors.toSet());
+
+    return currentSchedules.stream()
+        .filter(ts -> nextTutorIds.contains(ts.getTutor().getTutorId()))
+        .collect(Collectors.toList());
+  }
+
+  private List<GetTutorScheduleResponseDto.TutorInfo> convertToTutorInfoList(List<TutorSchedule> tutorSchedules) {
+    return tutorSchedules.stream()
+        .map(ts -> {
+          Tutor tutor = ts.getTutor();
+          return new GetTutorScheduleResponseDto.TutorInfo(
+              tutor.getTutorId(),
+              tutor.getTutorName(),
+              tutor.getTutorUniversity(),
+              tutor.getTutorMajor()
+          );
+        })
+        .collect(Collectors.toList());
+  }
+
 
 }

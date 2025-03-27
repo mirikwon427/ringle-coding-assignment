@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ringle.tutoring.domain.schedule.dto.request.UserScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.request.GetTutorScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.response.GetTutorScheduleResponseDto;
 import ringle.tutoring.domain.schedule.dto.response.TutorScheduleResponseDto;
-import ringle.tutoring.domain.schedule.dto.response.UserScheduleResponseDto;
 import ringle.tutoring.domain.schedule.service.TutorScheduleService;
 import ringle.tutoring.domain.schedule.dto.request.TutorScheduleRequestDto;
 
@@ -46,4 +46,14 @@ public class TutorScheduleController {
     }
   }
 
+  @GetMapping("/schedule")
+  public ResponseEntity<?> getStudentSchedule(@RequestBody GetTutorScheduleRequestDto getTutorScheduleRequestDto) {
+    try {
+      GetTutorScheduleResponseDto getTutorScheduleResponseDto = tutorScheduleService.getTutorSchedules(getTutorScheduleRequestDto);
+      return ResponseEntity.ok(getTutorScheduleResponseDto);
+    } catch (Exception e) {
+      // 예외 발생 시 400 Bad Request 반환
+      return ResponseEntity.badRequest().body(e.getMessage());
+    }
+  }
 }
