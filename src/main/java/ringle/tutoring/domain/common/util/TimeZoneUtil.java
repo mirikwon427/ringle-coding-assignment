@@ -1,13 +1,13 @@
 package ringle.tutoring.domain.common.util;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class TimeZoneUtil {
 
-  public static String convertUtcToLocalTime(LocalDateTime utcTime, String timeZone) {
+  public static String convertUtcToLocalTime(Instant utcTime, String timeZone) {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

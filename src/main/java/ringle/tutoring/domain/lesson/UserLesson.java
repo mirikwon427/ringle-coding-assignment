@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.Getter;
 import ringle.tutoring.domain.common.entity.BaseTimeEntity;
 import ringle.tutoring.domain.common.enums.Active;
@@ -33,13 +33,13 @@ public class UserLesson extends BaseTimeEntity {
   private LessonPackage lessonPackage;
 
   @Column(name = "user_lesson_purchased_at", nullable = false)
-  private LocalDateTime userLessonPurchasedAt;
+  private Instant userLessonPurchasedAt;
 
   @Column(name = "user_lesson_start_date", nullable = false)
-  private LocalDateTime userLessonStartDate;
+  private Instant userLessonStartDate;
 
   @Column(name = "user_lesson_end_date", nullable = false)
-  private LocalDateTime userLessonEndDate;
+  private Instant userLessonEndDate;
 
   @Column(name = "user_lesson_remained", nullable = false)
   private int userLessonRemained = 0;

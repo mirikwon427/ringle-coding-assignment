@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import lombok.Getter;
@@ -21,6 +22,10 @@ public class LessonPackage extends BaseTimeEntity {
 
   @Column(name = "lesson_package_name", nullable = false, length = 100)
   private String lessonPackageName;
+
+  @Lob
+  @Column(name = "lesson_package_description", nullable = false, columnDefinition = "TEXT")
+  private String lessonPackageDescription;
 
   @Column(name = "lesson_package_duration", nullable = false)
   private int lessonPackageduration = 0;

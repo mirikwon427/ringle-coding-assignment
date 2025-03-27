@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ringle.tutoring.domain.schedule.dto.request.UserScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.response.UserScheduleResponseDto;
 import ringle.tutoring.domain.schedule.service.UserScheduleService;
 
 @RestController
@@ -23,11 +24,8 @@ public class UserScheduleController {
   @GetMapping("/schedule/{userId}")
   public ResponseEntity<?> getStudentSchedule(@PathVariable long userId, @RequestBody UserScheduleRequestDto userScheduleRequestDto) {
     try {
-      // 학생의 수업 가능한 시간대 조회
-      userScheduleService.getClassTime(userId, userScheduleRequestDto);
-
-      // 성공적으로 시간대 반환
-      return ResponseEntity.ok(ResponseEntity.ok());
+      UserScheduleResponseDto userScheduleResponseDto = userScheduleService.getClassTime(userId, userScheduleRequestDto);
+      return ResponseEntity.ok(userScheduleResponseDto);
     } catch (Exception e) {
       // 예외 발생 시 400 Bad Request 반환
       return ResponseEntity.badRequest().body(e.getMessage());

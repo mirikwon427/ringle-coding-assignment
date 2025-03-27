@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import lombok.Getter;
 
 @Entity
@@ -19,7 +19,7 @@ public class ClassTime {
   private long classTimeId;
 
   @Column(name = "class_start_time", nullable = false)
-  private LocalDateTime classStartTime;
+  private Instant classStartTime;
 
   @Column(name = "class_time_is_available", nullable = false)
   private Boolean classTimeIsAvailable = true;

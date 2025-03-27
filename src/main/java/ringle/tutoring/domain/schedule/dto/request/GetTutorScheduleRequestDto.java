@@ -1,13 +1,14 @@
 package ringle.tutoring.domain.schedule.dto.request;
 
 import java.time.Instant;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-public class UserScheduleRequestDto {
+@AllArgsConstructor
+public class GetTutorScheduleRequestDto {
 
-  private Instant startDate;
-  private Instant endDate;
+  private int classTimeId;
   private int lessonDuration;
 
 }

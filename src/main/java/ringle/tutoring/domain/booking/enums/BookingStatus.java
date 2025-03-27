@@ -1,4 +1,4 @@
-package ringle.tutoring.domain.booking;
+package ringle.tutoring.domain.booking.enums;
 
 public enum BookingStatus {
   confirmed,
