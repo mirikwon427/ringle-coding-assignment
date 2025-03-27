@@ -14,7 +14,5 @@ public interface TutorScheduleRepository extends JpaRepository<TutorSchedule, Lo
 
   void deleteByTutorAndClassTime(Tutor tutor, ClassTime classTime);
 
-  List<TutorSchedule> findByClassTime(ClassTime classTime);
-
   List<TutorSchedule> findByClassTimeAndTutorScheduleIsAvailableTrue(ClassTime classTime);
 }

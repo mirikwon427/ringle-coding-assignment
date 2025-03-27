@@ -24,10 +24,7 @@ public class UserScheduleController {
   @GetMapping("/schedule/{userId}")
   public ResponseEntity<?> getStudentSchedule(@PathVariable long userId, @RequestBody UserScheduleRequestDto userScheduleRequestDto) {
     try {
-      // 학생의 수업 가능한 시간대 조회
       UserScheduleResponseDto userScheduleResponseDto = userScheduleService.getClassTime(userId, userScheduleRequestDto);
-
-      // 성공적으로 시간대 반환
       return ResponseEntity.ok(userScheduleResponseDto);
     } catch (Exception e) {
       // 예외 발생 시 400 Bad Request 반환
