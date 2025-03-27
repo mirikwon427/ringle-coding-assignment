@@ -38,6 +38,8 @@ public class BookingService {
 
     Booking booking = new Booking(user, tutorSchedule, bookLessonRequestDto.getLessonDuration());
     bookingRepository.save(booking);
+    //튜터 스케줄 상태 업데이트
+    tutorSchedule.setTutorScheduleIsAvailable(false);
 
     return new BookLessonResponseDto(
         booking.getBookingId(),

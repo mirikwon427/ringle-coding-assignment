@@ -38,4 +38,9 @@ public class TutorSchedule {
     this.tutor = tutor;
     this.classTime = classTime;
   }
+
+  // 상태 업데이트 메서드 추가
+  public void setTutorScheduleIsAvailable(Boolean tutorScheduleIsAvailable) {
+    this.tutorScheduleIsAvailable = tutorScheduleIsAvailable;
+  }
 }
