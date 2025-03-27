@@ -29,17 +29,16 @@ public class TutorScheduleService {
 
   @Transactional
   public TutorScheduleResponseDto createTutorSchedule(long tutorId, List<Long> classTimeIds) {
-    Tutor tutor = tutorRepository.findById(tutorId)
-        .orElseThrow(() -> new IllegalArgumentException("Tutor not found"));
-
+    Tutor tutor = findTutor(tutorId);
     List<TutorSchedule> tutorSchedules = new ArrayList<>();
 
     for (long classTimeId : classTimeIds) {
-      // ClassTime 찾기와 중복 여부 확인
-      ClassTime classTime = findClassTimeAndCheckExistence(classTimeId, tutor);
+      ClassTime classTime = findClassTime(classTimeId);
+      // 튜터 스케줄 존재 여부 확인 ( 존재하는 경우 예외 발생 )
+      checkIfTutorScheduleExists(tutor, classTime, true);
 
-      // TutorSchedule 생성 및 저장
-      TutorSchedule tutorSchedule = createAndSaveTutorSchedule(tutor, classTime);
+      TutorSchedule tutorSchedule = new TutorSchedule(tutor, classTime);
+      tutorScheduleRepository.save(tutorSchedule);
 
       tutorSchedules.add(tutorSchedule);
     }
@@ -47,22 +46,38 @@ public class TutorScheduleService {
     return TutorScheduleResponseDto.from(tutor, tutorSchedules);
   }
 
-  private ClassTime findClassTimeAndCheckExistence(long classTimeId, Tutor tutor) {
-    ClassTime classTime = classTimeRepository.findByClassTimeId(classTimeId)
-        .orElseThrow(() -> new IllegalArgumentException("ClassTime not found"));
-
-    boolean alreadyExists = tutorScheduleRepository.existsByTutorAndClassTime(tutor, classTime);
-    if (alreadyExists) {
-      throw new IllegalArgumentException("ClassTime already exists");
-    }
-
-    return classTime;
+  private Tutor findTutor(long tutorId) {
+    return tutorRepository.findById(tutorId)
+        .orElseThrow(() -> new IllegalArgumentException("Tutor not found"));
   }
 
-  private TutorSchedule createAndSaveTutorSchedule(Tutor tutor, ClassTime classTime) {
-    TutorSchedule tutorSchedule = new TutorSchedule(tutor, classTime);
-    tutorScheduleRepository.save(tutorSchedule);
-    return tutorSchedule;
+  private ClassTime findClassTime(long classTimeId) {
+    return classTimeRepository.findByClassTimeId(classTimeId)
+        .orElseThrow(() -> new IllegalArgumentException("ClassTime not found"));
+  }
+
+  private void checkIfTutorScheduleExists(Tutor tutor, ClassTime classTime, boolean checkIfExists) {
+    boolean alreadyExists = tutorScheduleRepository.existsByTutorAndClassTime(tutor, classTime);
+    if (checkIfExists && alreadyExists) {
+      throw new IllegalArgumentException("TutorSchedule already exists");
+    } else if (!checkIfExists && !alreadyExists) {
+      throw new IllegalArgumentException("No TutorSchedule found for the given Tutor and ClassTime");
+    }
+  }
+
+  @Transactional
+  public void deleteTutorSchedule(long tutorId, List<Long> classTimeIds) {
+    Tutor tutor = findTutor(tutorId);
+
+    for (long classTimeId : classTimeIds) {
+      ClassTime classTime = findClassTime(classTimeId);
+      // 튜터 스케줄 존재 여부 확인 ( 존재하지 않는 경우 예외 발생 )
+      checkIfTutorScheduleExists(tutor, classTime, false);
+
+      // TutorSchedule 삭제
+      tutorScheduleRepository.deleteByTutorAndClassTime(tutor, classTime);
+
+    }
   }
 
 }
