@@ -30,7 +30,7 @@ public class TutorScheduleController {
       TutorScheduleResponseDto tutorScheduleResponseDto = tutorScheduleService.createTutorSchedule(tutorId, tutorScheduleRequestDto.getClassTimeIds());
       return ResponseEntity.ok(tutorScheduleResponseDto);
     } catch (Exception e) {
-      e.printStackTrace();  // 예외를 콘솔에 출력
+      e.printStackTrace();
       return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
@@ -41,7 +41,7 @@ public class TutorScheduleController {
       tutorScheduleService.deleteTutorSchedule(tutorId, tutorScheduleRequestDto.getClassTimeIds());
       return ResponseEntity.noContent().build();
     } catch (Exception e) {
-      e.printStackTrace();  // 예외를 콘솔에 출력
+      e.printStackTrace();
       return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
@@ -52,8 +52,8 @@ public class TutorScheduleController {
       GetTutorScheduleResponseDto getTutorScheduleResponseDto = tutorScheduleService.getTutorSchedules(getTutorScheduleRequestDto);
       return ResponseEntity.ok(getTutorScheduleResponseDto);
     } catch (Exception e) {
-      // 예외 발생 시 400 Bad Request 반환
-      return ResponseEntity.badRequest().body(e.getMessage());
+      e.printStackTrace();
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
 }

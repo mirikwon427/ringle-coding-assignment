@@ -42,18 +42,18 @@ public class BookingService {
     return new BookLessonResponseDto(
         booking.getBookingId(),
         booking.getBookingDuration(),
-        booking.getBookingStatus().toString() // enum이면 name() 메서드로 문자열 변환
+        booking.getBookingStatus().toString()
     );
   }
 
   private User findUser(long userId) {
     return userRepository.findById(userId)
-        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        .orElseThrow(() -> new IllegalArgumentException("User를 찾을 수 없습니다."));
   }
 
   private TutorSchedule findTutorSchedule(long tutorScheduleId) {
     return tutorScheduleRepository.findById(tutorScheduleId)
-        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        .orElseThrow(() -> new IllegalArgumentException("TutorSchedule을 찾을 수 없습니다."));
   }
 
   @Transactional

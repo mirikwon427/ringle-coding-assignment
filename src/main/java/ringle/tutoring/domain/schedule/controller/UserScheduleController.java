@@ -27,8 +27,8 @@ public class UserScheduleController {
       UserScheduleResponseDto userScheduleResponseDto = userScheduleService.getClassTime(userId, userScheduleRequestDto);
       return ResponseEntity.ok(userScheduleResponseDto);
     } catch (Exception e) {
-      // 예외 발생 시 400 Bad Request 반환
-      return ResponseEntity.badRequest().body(e.getMessage());
+      e.printStackTrace();
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
 

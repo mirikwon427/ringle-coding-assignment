@@ -1,7 +1,6 @@
 package ringle.tutoring.domain.schedule.service;
 
 import jakarta.transaction.Transactional;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,20 +53,20 @@ public class TutorScheduleService {
 
   private Tutor findTutor(long tutorId) {
     return tutorRepository.findById(tutorId)
-        .orElseThrow(() -> new IllegalArgumentException("Tutor not found"));
+        .orElseThrow(() -> new IllegalArgumentException("Tutor을 찾을 수 없습니다."));
   }
 
   private ClassTime findClassTime(long classTimeId) {
     return classTimeRepository.findByClassTimeId(classTimeId)
-        .orElseThrow(() -> new IllegalArgumentException("ClassTime not found"));
+        .orElseThrow(() -> new IllegalArgumentException("ClassTime을 찾을 수 없습니다."));
   }
 
   private void checkIfTutorScheduleExists(Tutor tutor, ClassTime classTime, boolean checkIfExists) {
     boolean alreadyExists = tutorScheduleRepository.existsByTutorAndClassTime(tutor, classTime);
     if (checkIfExists && alreadyExists) {
-      throw new IllegalArgumentException("TutorSchedule already exists");
+      throw new IllegalArgumentException("TutorSchedule이 이미 있습니다.");
     } else if (!checkIfExists && !alreadyExists) {
-      throw new IllegalArgumentException("No TutorSchedule found for the given Tutor and ClassTime");
+      throw new IllegalArgumentException("utorSchedule을 찾을 수 없습니다.");
     }
   }
 

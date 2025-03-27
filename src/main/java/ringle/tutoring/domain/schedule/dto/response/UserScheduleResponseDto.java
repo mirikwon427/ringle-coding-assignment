@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import ringle.tutoring.domain.common.util.TimeZoneUtil;
-import ringle.tutoring.domain.lesson.UserLesson;
+import ringle.tutoring.domain.lesson.entity.UserLesson;
 import ringle.tutoring.domain.schedule.entity.ClassTime;
 import ringle.tutoring.domain.user.entity.User;
 
@@ -19,7 +19,6 @@ public class UserScheduleResponseDto {
   private int userLessonDuration;
   private List<ClassTimeDetails> classTimes;
 
-  // 내부 DTO for classTime details
   @Getter
   public static class ClassTimeDetails {
     private long classTimeId;
@@ -31,7 +30,6 @@ public class UserScheduleResponseDto {
     }
   }
 
-  // DTO 변환 메소드
   public static UserScheduleResponseDto from(User user, UserLesson userLesson, List<ClassTime> classTimes) {
     List<ClassTimeDetails> classTimeDetails = classTimes.stream()
         .map(classTime -> new ClassTimeDetails(

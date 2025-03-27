@@ -29,7 +29,7 @@ public class BookingController {
       BookLessonResponseDto bookLessonResponseDto = bookingService.bookLesson(userId, bookLessonRequestDto);
       return ResponseEntity.ok(bookLessonResponseDto);
     } catch (Exception e) {
-      e.printStackTrace();  // 예외를 콘솔에 출력
+      e.printStackTrace();
       return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
@@ -40,8 +40,8 @@ public class BookingController {
       List<GetBookLessonResponseDto> getBookLessonResponseDto = bookingService.getBookLesson(userId);
       return ResponseEntity.ok(getBookLessonResponseDto);
     } catch (Exception e) {
-      // 예외 발생 시 400 Bad Request 반환
-      return ResponseEntity.badRequest().body(e.getMessage());
+      e.printStackTrace();
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
 }

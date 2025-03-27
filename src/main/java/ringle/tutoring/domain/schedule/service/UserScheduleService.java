@@ -5,7 +5,7 @@ import java.time.Instant;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import ringle.tutoring.domain.common.enums.Active;
-import ringle.tutoring.domain.lesson.UserLesson;
+import ringle.tutoring.domain.lesson.entity.UserLesson;
 import ringle.tutoring.domain.lesson.repository.UserLessonRepository;
 import ringle.tutoring.domain.schedule.dto.request.UserScheduleRequestDto;
 import ringle.tutoring.domain.schedule.dto.response.UserScheduleResponseDto;
@@ -47,12 +47,12 @@ public class UserScheduleService {
 
   private User findUser(long userId) {
     return userRepository.findById(userId)
-        .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        .orElseThrow(() -> new IllegalArgumentException("User를 찾을 수 없습니다."));
   }
 
   private UserLesson findByUser(User user) {
     return userLessonRepository.findByUser(user)
-        .orElseThrow(() -> new IllegalArgumentException("UserLesson not found"));
+        .orElseThrow(() -> new IllegalArgumentException("UserLesson을 찾을 수 없습니다."));
   }
 
   private void validateUserLesson(UserLesson userLesson, int requestedLessonDuration) {

@@ -14,7 +14,7 @@ public class TutorScheduleResponseDto {
   private long tutorId;
   private String tutorName;
   private String tutorTimeZone;
-  private List<TutorScheduleDetails> schedules;  // 수업 정보 리스트
+  private List<TutorScheduleDetails> schedules;
 
   // 엔티티 -> DTO 변환
   public static TutorScheduleResponseDto from(Tutor tutor, List<TutorSchedule> tutorSchedules) {

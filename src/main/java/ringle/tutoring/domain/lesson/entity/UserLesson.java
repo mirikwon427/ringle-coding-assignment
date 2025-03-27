@@ -1,4 +1,4 @@
-package ringle.tutoring.domain.lesson;
+package ringle.tutoring.domain.lesson.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
