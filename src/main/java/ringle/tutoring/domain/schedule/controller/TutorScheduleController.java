@@ -47,7 +47,7 @@ public class TutorScheduleController {
   }
 
   @GetMapping("/schedule")
-  public ResponseEntity<?> getStudentSchedule(@RequestBody GetTutorScheduleRequestDto getTutorScheduleRequestDto) {
+  public ResponseEntity<?> getTutorSchedule(@RequestBody GetTutorScheduleRequestDto getTutorScheduleRequestDto) {
     try {
       GetTutorScheduleResponseDto getTutorScheduleResponseDto = tutorScheduleService.getTutorSchedules(getTutorScheduleRequestDto);
       return ResponseEntity.ok(getTutorScheduleResponseDto);
