@@ -102,7 +102,7 @@
 git clone https://github.com/mirikwon427/ringle-coding-assignment.git
 cd ringle-coding-assignment
 git checkout develop
-
+```
 ---
 
 ## 🔗 API 사용 방법 (테스트 방법 포함)
@@ -116,11 +116,9 @@ git checkout develop
 
 ### 🔖 ERD (Entity Relationship Diagram)
 
-아래는 본 시스템의 엔티티 관계를 나타낸 ERD입니다. 프로젝트 구조를 한눈에 파악할 수 있습니다.
+아래는 본 시스템의 엔티티 관계를 나타낸 ERD입니다.
 
-![Ringle 튜터링 시스템 ERD](./docs/ringle-tutoring-erd.png)
-
-> 📍 ERD 원본 파일은 [여기서 확인](./docs/ringle-tutoring-erd.png)하실 수 있습니다.
+![Ringle 튜터링 시스템 ERD](src/main/resources/static/ringle.png)
 
 ### 🚨 예외 처리
 
@@ -129,3 +127,4 @@ git checkout develop
 ---
 
 🎉 **Ringle 튜터링 예약 시스템**을 활용하여 간편하게 튜터링 예약을 관리하세요!
+
