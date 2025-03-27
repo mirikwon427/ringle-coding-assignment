@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.Getter;
 
 @Entity
@@ -17,9 +18,9 @@ public class ClassTime {
   @Column(name = "class_time_id")
   private long classTimeId;
 
-  @Column(name = "class_start_time")
-  private String classStartTime;
+  @Column(name = "class_start_time", nullable = false)
+  private LocalDateTime classStartTime;
 
-  @Column(name = "class_time_is_available")
+  @Column(name = "class_time_is_available", nullable = false)
   private Boolean classTimeIsAvailable = true;
 }
