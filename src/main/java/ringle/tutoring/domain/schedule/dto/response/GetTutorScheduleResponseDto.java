@@ -15,6 +15,7 @@ public class GetTutorScheduleResponseDto {
   @Getter
   @AllArgsConstructor
   public static class TutorInfo {
+    private long tutorScheduleId;
     private long tutorId;
     private String tutorName;
     private String tutorUniversity;
