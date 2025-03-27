@@ -39,7 +39,7 @@ public class Tutor extends BaseTimeEntity {
   @Column(name = "tutor_major", nullable = false, length = 100)
   private String tutorMajor;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   @Column(name = "tutor_status", nullable = false)
   private Active tutorStatus = Active.active;
 

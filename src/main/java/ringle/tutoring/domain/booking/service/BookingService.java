@@ -11,6 +11,11 @@ import ringle.tutoring.domain.booking.dto.request.BookLessonRequestDto;
 import ringle.tutoring.domain.booking.dto.response.BookLessonResponseDto;
 import ringle.tutoring.domain.booking.enums.BookingStatus;
 import ringle.tutoring.domain.booking.repository.BookingRepository;
+import ringle.tutoring.domain.common.enums.Active;
+import ringle.tutoring.domain.lesson.entity.LessonPackage;
+import ringle.tutoring.domain.lesson.entity.UserLesson;
+import ringle.tutoring.domain.lesson.repository.LessonPackageRepository;
+import ringle.tutoring.domain.lesson.repository.UserLessonRepository;
 import ringle.tutoring.domain.schedule.entity.ClassTime;
 import ringle.tutoring.domain.schedule.entity.TutorSchedule;
 import ringle.tutoring.domain.schedule.repository.TutorScheduleRepository;
@@ -24,22 +29,31 @@ public class BookingService {
   private final UserRepository userRepository;
   private final BookingRepository bookingRepository;
   private final TutorScheduleRepository tutorScheduleRepository;
+  private final UserLessonRepository userLessonRepository;
+  private final LessonPackageRepository lessonPackageRepository;
 
-  public BookingService(UserRepository userRepository, TutorScheduleRepository tutorScheduleRepository, BookingRepository bookingRepository) {
+  public BookingService(UserRepository userRepository, TutorScheduleRepository tutorScheduleRepository, BookingRepository bookingRepository,
+      UserLessonRepository userLessonRepository,
+      LessonPackageRepository lessonPackageRepository) {
     this.userRepository = userRepository;
     this.tutorScheduleRepository = tutorScheduleRepository;
     this.bookingRepository = bookingRepository;
+    this.userLessonRepository = userLessonRepository;
+    this.lessonPackageRepository = lessonPackageRepository;
   }
 
   @Transactional
   public BookLessonResponseDto bookLesson(long userId, BookLessonRequestDto bookLessonRequestDto) {
     User user = findUser(userId);
     TutorSchedule tutorSchedule = findTutorSchedule(bookLessonRequestDto.getTutorScheduleId());
+    UserLesson userLesson = findUserLesson(user, Active.active);
+    LessonPackage lessonPackage = findLessonPackage(userLesson.getLessonPackage().getLessonPackageId());
 
-    Booking booking = new Booking(user, tutorSchedule, bookLessonRequestDto.getLessonDuration());
-    bookingRepository.save(booking);
+    validateLessonDuration(lessonPackage, bookLessonRequestDto);
+
+    Booking booking = createBooking(user, tutorSchedule, bookLessonRequestDto);
     //튜터 스케줄 상태 업데이트
-    tutorSchedule.setTutorScheduleIsAvailable(false);
+    updateTutorScheduleAvailability(tutorSchedule);
 
     return new BookLessonResponseDto(
         booking.getBookingId(),
@@ -56,6 +70,34 @@ public class BookingService {
   private TutorSchedule findTutorSchedule(long tutorScheduleId) {
     return tutorScheduleRepository.findById(tutorScheduleId)
         .orElseThrow(() -> new IllegalArgumentException("TutorSchedule을 찾을 수 없습니다."));
+  }
+
+  private UserLesson findUserLesson(User user, Active userLessonStatus) {
+    System.out.println(user.getUserId());
+    System.out.println(userLessonStatus);
+    return userLessonRepository.findByUserAndUserLessonStatus(user, userLessonStatus)
+        .orElseThrow(() -> new IllegalArgumentException("UserLesson을 찾을 수 없습니다."));
+  }
+
+  private LessonPackage findLessonPackage(long lessonPackageId) {
+    return lessonPackageRepository.findById(lessonPackageId)
+        .orElseThrow(() -> new IllegalArgumentException("LessonPackage를 찾을 수 없습니다."));
+  }
+
+  private void validateLessonDuration(LessonPackage lessonPackage, BookLessonRequestDto bookLessonRequestDto) {
+    if (lessonPackage.getLessonPackageduration() != bookLessonRequestDto.getLessonDuration()) {
+      throw new IllegalArgumentException("보유한 수업권으로는 " + lessonPackage.getLessonPackageduration() + "분 수업만 예약할 수 있습니다.");
+    }
+  }
+
+  private Booking createBooking(User user, TutorSchedule tutorSchedule, BookLessonRequestDto bookLessonRequestDto) {
+    Booking booking = new Booking(user, tutorSchedule, bookLessonRequestDto.getLessonDuration());
+    bookingRepository.save(booking);
+    return booking;
+  }
+
+  private void updateTutorScheduleAvailability(TutorSchedule tutorSchedule) {
+    tutorSchedule.setTutorScheduleIsAvailable(false);
   }
 
   @Transactional
