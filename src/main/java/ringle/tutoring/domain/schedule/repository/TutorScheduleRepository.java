@@ -10,4 +10,6 @@ import ringle.tutoring.domain.tutor.entity.Tutor;
 public interface TutorScheduleRepository extends JpaRepository<TutorSchedule, Long> {
 
   boolean existsByTutorAndClassTime(Tutor tutor, ClassTime classTime);
+
+  void deleteByTutorAndClassTime(Tutor tutor, ClassTime classTime);
 }

@@ -1,7 +1,7 @@
 package ringle.tutoring.domain.schedule.controller;
 
-import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +26,17 @@ public class TutorScheduleController {
     try {
       TutorScheduleResponseDto tutorScheduleResponseDto = tutorScheduleService.createTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
       return ResponseEntity.ok(tutorScheduleResponseDto);
+    } catch (Exception e) {
+      e.printStackTrace();  // 예외를 콘솔에 출력
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+    }
+  }
+
+  @DeleteMapping("/schedule/{tutorId}")
+  public ResponseEntity<?> deleteTutorSchedule(@PathVariable long tutorId, @RequestBody ScheduleRequestDto scheduleRequestDto) {
+    try {
+      tutorScheduleService.deleteTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
+      return ResponseEntity.noContent().build();
     } catch (Exception e) {
       e.printStackTrace();  // 예외를 콘솔에 출력
       return ResponseEntity.badRequest().body("Error: " + e.getMessage());
