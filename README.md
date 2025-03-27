@@ -112,7 +112,7 @@ git checkout develop
 
 ---
 
-## 📌 추가 참고사항 (ERD 포함)
+## 📌 추가 참고사항
 
 ### 🔖 ERD (Entity Relationship Diagram)
 
