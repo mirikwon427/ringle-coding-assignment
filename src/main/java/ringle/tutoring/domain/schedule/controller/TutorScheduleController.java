@@ -2,12 +2,15 @@ package ringle.tutoring.domain.schedule.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ringle.tutoring.domain.schedule.dto.request.UserScheduleRequestDto;
 import ringle.tutoring.domain.schedule.dto.response.TutorScheduleResponseDto;
+import ringle.tutoring.domain.schedule.dto.response.UserScheduleResponseDto;
 import ringle.tutoring.domain.schedule.service.TutorScheduleService;
 import ringle.tutoring.domain.schedule.dto.request.TutorScheduleRequestDto;
 
