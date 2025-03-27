@@ -1,4 +1,4 @@
-package ringle.tutoring.domain.schedule.dto;
+package ringle.tutoring.domain.schedule.dto.request;
 
 import java.util.List;
 

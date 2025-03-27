@@ -1,13 +1,15 @@
 package ringle.tutoring.domain.schedule.controller;
 
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ringle.tutoring.domain.schedule.dto.response.TutorScheduleResponseDto;
 import ringle.tutoring.domain.schedule.service.TutorScheduleService;
-import ringle.tutoring.domain.schedule.dto.ScheduleRequestDto;
+import ringle.tutoring.domain.schedule.dto.request.ScheduleRequestDto;
 
 @RestController
 @RequestMapping("tutor")
@@ -22,10 +24,11 @@ public class TutorScheduleController {
   @PostMapping("/schedule/{tutorId}")
   public ResponseEntity<?> createTutorSchedule(@PathVariable long tutorId, @RequestBody ScheduleRequestDto scheduleRequestDto) {
     try {
-      tutorScheduleService.createTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
-      return ResponseEntity.ok("success");
+      TutorScheduleResponseDto tutorScheduleResponseDto = tutorScheduleService.createTutorSchedule(tutorId, scheduleRequestDto.getClassTimeIds());
+      return ResponseEntity.ok(tutorScheduleResponseDto);
     } catch (Exception e) {
-      return ResponseEntity.badRequest().build();
+      e.printStackTrace();  // 예외를 콘솔에 출력
+      return ResponseEntity.badRequest().body("Error: " + e.getMessage());
     }
   }
 
