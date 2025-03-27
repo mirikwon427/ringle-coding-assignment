@@ -6,5 +6,4 @@ import ringle.tutoring.domain.schedule.entity.ClassTime;
 
 public interface ClassTimeRepository extends JpaRepository<ClassTime, Long> {
   Optional<ClassTime> findByClassTimeId(long classTimeId);
-
 }
